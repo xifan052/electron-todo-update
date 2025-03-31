@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "AlimamaFangYuanTiVF";
+  src: url("./fonts/AlimamaFangYuanTiVF-Thin.woff2") format("woff2"),
+    url("./fonts/AlimamaFangYuanTiVF-Thin.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+/* Smooth transitions for todo items */
+.MuiListItem-root {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Custom scrollbar for the app */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
