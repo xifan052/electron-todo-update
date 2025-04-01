@@ -120,7 +120,7 @@ ipcMain.handle("open-win", (_, arg) => {
 });
 
 const server = "https://update.electronjs.org";
-const feedURL = `${server}/xifan052/electron-toto-application/${process.platform}-${process.arch}`;
+const feedURL = `${server}/xifan052/electron-todo-update/${process.platform}-${process.arch}`;
 
 autoUpdater.setFeedURL({ url: feedURL });
 

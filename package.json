@@ -1,5 +1,5 @@
 {
-  "name": "electron-toto-application",
+  "name": "electron-todo-update",
   "version": "0.0.2",
   "main": "dist-electron/main/index.js",
   "description": "Todo Application",
