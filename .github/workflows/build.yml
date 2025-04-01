@@ -21,6 +21,10 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
+      - name: Install Snapcraft
+        run: |
+          sudo snap install snapcraft --classic
+          sudo snapcraft --version  # 验证安装
 
       - name: Build Electron App
         run: npm run build
