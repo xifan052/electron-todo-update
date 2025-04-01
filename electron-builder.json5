@@ -32,7 +32,7 @@
   },
   publish: {
     provider: "github",
-    channel: "latest",
+    releaseType: "release",
     owner: "xifan052",
     repo: "electron-todo-update",
   },
