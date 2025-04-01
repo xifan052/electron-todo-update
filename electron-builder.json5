@@ -31,9 +31,6 @@
     include: "installer.nsh",
   },
   publish: {
-    provider: "github",
-    channel: "latest",
-    owner: "xifan052",
-    repo: "electron-todo-update"
+    provider: "github"
    },
 }
