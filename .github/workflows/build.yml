@@ -41,3 +41,4 @@ jobs:
            draft: false
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npx electron-builder --win --x64 --publish always
