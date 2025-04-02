@@ -2,7 +2,8 @@ name: Build & Release Electron App
 
 on:
   push:
-    branches: [master]
+    tags:
+      - 'v*.*.*'  # 只在版本标签推送时触发
     paths-ignore:
       - "**.md"
       - "**.spec.js"
