@@ -29,6 +29,8 @@
   },
   "publish": {
     "provider": "github",
-    "channel": "latest"
+    "channel": "latest",
+    "owner": "xifan052",
+    "repo": "electron-todo-update"
   }
 }

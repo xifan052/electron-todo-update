@@ -1,4 +1,4 @@
-name: Build
+name: Build & Release Electron App
 
 on:
   push:
@@ -16,11 +16,7 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [windows-latest]
+    runs-on: windows-latest
 
     steps:
       - name: Checkout Code
@@ -34,14 +30,13 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Build Release Files
+      - name: Build Electron App
         run: npm run build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Artifact
+      - name: Upload Windows Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: release_on_${{ matrix. os }}
-          path: release/
-          retention-days: 5
+          name: windows-release-assets-${{ github.sha }}
+          path: release/*/desktop-Windows-*.zip
