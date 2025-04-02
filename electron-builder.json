@@ -18,6 +18,7 @@
         "arch": ["x64"]
       }
     ],
+    "icon": "build/icon.ico",
     "artifactName": "${productName}_${version}.${ext}"
   },
   "nsis": {
@@ -27,8 +28,7 @@
     "deleteAppDataOnUninstall": false
   },
   "publish": {
-    "provider": "generic",
-    "channel": "latest",
-    "url": "https://github.com/xifan052/electron-todo-update/releases/download/v0.9.9/"
+    "provider": "github",
+    "channel": "latest"
   }
 }
