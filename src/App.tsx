@@ -8,13 +8,6 @@ function App() {
   const [count, setCount] = useState(0)
   return (
     <div className='App'>
-      <div className='logo-box'>
-        <a href='https://github.com/xifan052/electron-todo-update' target='_blank'>
-          <img src={logoVite} className='logo vite' alt='Electron + Vite logo' />
-          <img src={logoElectron} className='logo electron' alt='Electron + Vite logo' />
-        </a>
-      </div>
-      <h1>Electron + Vite + React</h1>
       <div className='card'>
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
