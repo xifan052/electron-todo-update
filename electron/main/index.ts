@@ -1,9 +1,10 @@
 import { app, BrowserWindow, shell, ipcMain, dialog } from "electron";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
-import { autoUpdater } from "electron-updater";
+import pkg from "electron-updater";
 import path from "node:path";
 import os from "node:os";
+const { autoUpdater } = pkg;
 import { update } from "./update";
 
 const require = createRequire(import.meta.url);
