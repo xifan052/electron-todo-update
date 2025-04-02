@@ -9,7 +9,11 @@ import type {
 const { autoUpdater } = createRequire(import.meta.url)("electron-updater");
 
 export function update(win: Electron.BrowserWindow) {
-  win?.webContents.send("main-process-message", "start update",app.getVersion());
+  win?.webContents.send(
+    "main-process-message",
+    "start update",
+    app.getVersion()
+  );
 
   // When set to false, the update download will be triggered through the API
   autoUpdater.autoDownload = false;
@@ -54,12 +58,21 @@ export function update(win: Electron.BrowserWindow) {
       const error = new Error(
         "The update feature is only available after the package."
       );
+      console.error("Update check failed:", error.message);
       return { message: error.message, error };
     }
 
     try {
-      return await autoUpdater.checkForUpdatesAndNotify();
+      console.log("Checking for updates...");
+      const result = await autoUpdater.checkForUpdatesAndNotify();
+      console.log("Update check result:", result);
+      return result;
     } catch (error) {
+      if (error instanceof Error) {
+        console.error("Network error during update check:", error.message);
+      } else {
+        console.error("Network error during update check:", error);
+      }
       return { message: "Network error", error };
     }
   });
