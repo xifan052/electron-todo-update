@@ -9,16 +9,24 @@ import type {
 const { autoUpdater } = createRequire(import.meta.url)("electron-updater");
 
 export function update(win: Electron.BrowserWindow) {
-  console.log("start update");
+  win?.webContents.send("main-process-message", "start update",app.getVersion());
+
   // When set to false, the update download will be triggered through the API
   autoUpdater.autoDownload = false;
   autoUpdater.disableWebInstaller = false;
   autoUpdater.allowDowngrade = false;
 
   // start check
-  autoUpdater.on("checking-for-update", function () {});
+  autoUpdater.on("checking-for-update", function () {
+    win?.webContents.send("main-process-message", "checking-for-update");
+  });
   // update available
   autoUpdater.on("update-available", (arg: UpdateInfo) => {
+    win?.webContents.send(
+      "main-process-message",
+      `getVersion`,
+      app.getVersion()
+    );
     win.webContents.send("update-can-available", {
       update: true,
       version: app.getVersion(),
@@ -27,6 +35,11 @@ export function update(win: Electron.BrowserWindow) {
   });
   // update not available
   autoUpdater.on("update-not-available", (arg: UpdateInfo) => {
+    win?.webContents.send(
+      "main-process-message",
+      "update-can-available - getVersion",
+      app.getVersion()
+    );
     win.webContents.send("update-can-available", {
       update: false,
       version: app.getVersion(),
@@ -36,6 +49,7 @@ export function update(win: Electron.BrowserWindow) {
 
   // Checking for updates
   ipcMain.handle("check-update", async () => {
+    win?.webContents.send("main-process-message", "check-update");
     if (!app.isPackaged) {
       const error = new Error(
         "The update feature is only available after the package."
@@ -52,25 +66,45 @@ export function update(win: Electron.BrowserWindow) {
 
   // Start downloading and feedback on progress
   ipcMain.handle("start-download", (event: Electron.IpcMainInvokeEvent) => {
+    win?.webContents.send("main-process-message", "start-download");
     startDownload(
       (error, progressInfo) => {
         if (error) {
           // feedback download error message
           event.sender.send("update-error", { message: error.message, error });
+          win?.webContents.send("main-process-message", "update-error", {
+            message: error.message,
+            error,
+          });
         } else {
           // feedback update progress message
           event.sender.send("download-progress", progressInfo);
+          win?.webContents.send(
+            "main-process-message",
+            "download-progress",
+            progressInfo
+          );
         }
       },
       () => {
         // feedback update downloaded message
         event.sender.send("update-downloaded");
+        win?.webContents.send(
+          "main-process-message",
+          "main-process-message",
+          "update-downloaded"
+        );
       }
     );
   });
 
   // Install now
   ipcMain.handle("quit-and-install", () => {
+    win?.webContents.send(
+      "main-process-message",
+      "main-process-message",
+      "quit-and-install"
+    );
     autoUpdater.quitAndInstall(false, true);
   });
 }
