@@ -1,6 +1,7 @@
-import { app, BrowserWindow, shell, ipcMain } from "electron";
+import { app, BrowserWindow, shell, ipcMain, dialog } from "electron";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
+import { autoUpdater } from "electron-updater";
 import path from "node:path";
 import os from "node:os";
 import { update } from "./update";
@@ -76,6 +77,22 @@ async function createWindow() {
     if (win) {
       update(win);
     }
+    // 监听更新事件
+    autoUpdater.on("update-available", () => {
+      win?.webContents.send("main-process-message", "update-available");
+      dialog.showMessageBox({ message: "发现新版本，正在下载..." });
+    });
+    autoUpdater.on("update-downloaded", () => {
+      win?.webContents.send("main-process-message", "update-downloaded");
+      dialog.showMessageBox({ message: "更新下载完成，即将重启应用。" });
+      autoUpdater.quitAndInstall();
+    });
+
+    // 启动应用后检查更新
+    app.on("ready", () => {
+      win?.webContents.send("main-process-message", "ready");
+      autoUpdater.checkForUpdatesAndNotify();
+    });
   });
 
   // Make all links open with the browser, not with the application
