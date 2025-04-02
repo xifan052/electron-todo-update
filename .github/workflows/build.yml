@@ -24,10 +24,10 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 18
 
@@ -42,6 +42,11 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: release_on_${{ matrix. os }}
-          path: release/
+          name: release_on_${{ matrix.os }}
+          path: |
+            release/*.exe
+            release/*.msi
+            release/*.zip
+            release/latest.yml
+          if-no-files-found: error
           retention-days: 5
