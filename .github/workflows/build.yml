@@ -32,8 +32,8 @@ jobs:
 
       - name: Build Electron App
         run: npm run build
-
-      - name: Publish Electron App
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Publish Electron App
         run: npx electron-builder --publish always
