@@ -52,6 +52,7 @@ const Update = () => {
       setUpdateError(undefined);
       // Can be update
       if (arg1.update) {
+        console.log(111111111112222)
         setModalBtn((state) => ({
           ...state,
           cancelText: "Cancel",
@@ -100,7 +101,7 @@ const Update = () => {
     window.ipcRenderer.on("update-error", onUpdateError);
     window.ipcRenderer.on("download-progress", onDownloadProgress);
     window.ipcRenderer.on("update-downloaded", onUpdateDownloaded);
-
+    checkUpdate()
     return () => {
       window.ipcRenderer.off("update-can-available", onUpdateCanAvailable);
       window.ipcRenderer.off("update-error", onUpdateError);
