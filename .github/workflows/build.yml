@@ -36,4 +36,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Publish Electron App
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npx electron-builder --publish always
